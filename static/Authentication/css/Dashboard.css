@@ -1,104 +1,122 @@
-/* General */
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9fafb;
+    margin: 0;  /* Elimina márgenes por defecto */
+    padding: 0; /* Elimina padding por defecto */
+}
+
 .dashboard-body {
-  background-color: #f9fafb;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 2rem;
-  min-height: 100vh;
+    padding: 1rem;  /* Agrega espacio dentro del contenedor principal */
+    margin: 0 auto; /* Centra el contenido */
+    max-width: 13000px; /* Limita el ancho máximo del contenido */
 }
 
-/* Cards */
-.dashboard-cards {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  margin-bottom: 2rem;
-}
-
+/* Card Hover Effect */
 .card {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: white;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease;
 }
 
-.card h2 {
-  font-size: 1.125rem;
-  font-weight: bold;
-  color: #111827;
+.card:hover {
+    transform: translateY(-5px);
 }
 
-.card p {
-  color: #4b5563;
-  font-size: 1rem;
+/* Attention Levels */
+.card-green {
+    background-color: #ffffff;
+    border-left: 4px solid #10b981; /* Verde */
 }
 
-.icon {
-  padding: 0.75rem;
-  border-radius: 9999px;
-  font-size: 1.25rem;
+.card-yellow {
+    background-color: #ffffff;
+    border-left: 4px solid #f59e0b; /* Amarillo */
 }
 
-/* Icon backgrounds */
-.card-green .icon {
-  background-color: #bbf7d0;
-  color: #16a34a;
+.card-blue {
+    background-color: #ffffff;
+    border-left: 4px solid #4e72e9; /* Azul */
 }
 
-.card-yellow .icon {
-  background-color: #fef9c3;
-  color: #facc15;
+/* Flexbox and Layout for Cards */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
 }
 
-.card-blue .icon {
-  background-color: #dbeafe;
-  color: #3b82f6;
+.dashboard-cards .card {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;  /* Añadir margen entre las tarjetas */
 }
 
-/* Charts layout */
+.dashboard-cards .card .icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.dashboard-cards .card h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937; /* Gris oscuro */
+}
+
+.dashboard-cards .card p {
+    font-size: 1.125rem;
+    color: #4b5563; /* Gris */
+}
+
+/* Grid Layout for Charts */
 .charts {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
 }
 
 .chart-box {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 1.5rem; /* Añadir margen entre las gráficas */
 }
 
 .chart-box h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: #111827;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1rem;
 }
 
-/* Pie Chart */
+.chart-box canvas {
+    width: 100%;
+    height: 18rem; /* Ajusta el tamaño del gráfico */
+}
+
+/* Pie Chart Section */
 .chart-pie {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-  max-width: 500px;
-  margin: 0 auto;
-  text-align: center;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 2rem; /* Añadir espacio superior */
 }
 
 .chart-pie h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: #111827;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1rem;
 }
 
-/* Canvas */
-canvas {
-  width: 100% !important;
-  height: auto !important;
+/* Responsive Design */
+@media (min-width: 1024px) {
+    .dashboard-cards {
+        grid-template-columns: repeat(3, 1fr); /* Tres columnas en pantallas grandes */
+    }
+
+    .charts {
+        grid-template-columns: repeat(2, 1fr); /* Dos columnas para las gráficas */
+    }
 }

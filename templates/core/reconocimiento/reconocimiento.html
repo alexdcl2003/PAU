@@ -1,19 +1,18 @@
 {% extends "components/base.html" %}
 {% load static %}
-
-{% block title %}Reconocimiento - MonitorAula{% endblock %}
-
-{% block extra_css %}
-  <link rel="stylesheet" href="{% static 'Dashboard/css/dashboard.css' %}">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-{% endblock %}
-
 {% block content %}
+<head>
+    <title>dashboard</title>
+  <link rel="stylesheet" href="{% static 'Authentication/css/Dashboard.css' %}" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+
 <main class="dashboard-body">
   <!-- Tarjetas -->
   <section class="dashboard-cards">
-    <!-- Ejemplo de tarjeta -->
+    <!-- Tarjeta de Atención Promedio -->
     <div class="card card-green">
       <div class="icon"><i class="fas fa-brain"></i></div>
       <div>
@@ -21,7 +20,24 @@
         <p>78%</p>
       </div>
     </div>
-    <!-- Resto de tarjetas... -->
+
+    <!-- Tarjeta de Estudiantes Distraídos -->
+    <div class="card card-yellow">
+      <div class="icon"><i class="fas fa-users"></i></div>
+      <div>
+        <h2>Estudiantes Distraídos</h2>
+        <p>22%</p>
+      </div>
+    </div>
+
+    <!-- Tarjeta de Sesiones Monitoreadas -->
+    <div class="card card-blue">
+      <div class="icon"><i class="fas fa-chart-line"></i></div>
+      <div>
+        <h2>Sesiones Monitoreadas</h2>
+        <p>24</p>
+      </div>
+    </div>
   </section>
 
   <!-- Gráficas -->
