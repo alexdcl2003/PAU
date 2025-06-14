@@ -9,17 +9,47 @@
   <link rel="stylesheet" href="{% static 'Authentication/css/login.css' %}" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.625rem 1.25rem;
+    }
+
+    .left-section {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .right-section {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .logo-img {
+      height: 3.5rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-img:hover {
+      transform: scale(1.05);
+    }
+
     .usuario-container {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 0.375rem;
       position: relative;
     }
 
     .logo-usuario {
-      width: 32px;
-      height: 32px;
+      width: 2rem;
+      height: 2rem;
       border-radius: 50%;
       transition: transform 0.3s ease;
       cursor: pointer;
@@ -30,11 +60,21 @@
     }
 
     .gancho-genero {
-      width: 24px;
-      height: 24px;
+      width: 1.75rem;
+      height: 1.75rem;
       border-radius: 50%;
+      transition: transform 0.3s ease;
+      cursor: pointer;
       background: #e0e0e0;
-      padding: 2px;
+      padding: 0.125rem;
+    }
+
+    .usuario-container:hover .gancho-genero {
+      transform: scale(1.1);
+    }
+
+    .logo-usuario:focus {
+      outline: none;
     }
 
     .nombre-usuario {
@@ -46,12 +86,12 @@
 
     .cerrar-sesion {
       display: none;
-      margin-top: 4px;
+      margin-top: 0.25rem;
       background: #000;
       color: #fff;
-      padding: 4px 10px;
-      font-size: 14px;
-      border-radius: 6px;
+      padding: 0.25rem 0.625rem;
+      font-size: 0.875rem;
+      border-radius: 0.375rem;
       text-decoration: none;
       transition: background 0.3s ease;
       width: fit-content;
@@ -61,26 +101,19 @@
       display: inline-block;
     }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 2px 20px;
-    }
-
     nav ul {
       margin: 0;
       padding: 0;
       list-style: none;
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 1.25rem;
     }
 
     .btn, .btn-active, .boton-link {
       text-decoration: none;
-      padding: 6px 12px;
-      border-radius: 6px;
+      padding: 0.375rem 0.75rem;
+      border-radius: 0.375rem;
       font-weight: 500;
     }
 
@@ -90,124 +123,110 @@
     }
 
     .btn {
-      border: 1px solid black;
+      border: 0.0625rem solid black;
       color: black;
     }
 
     .boton-link {
       color: #333;
     }
-    .gancho-genero {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  transition: transform 0.3s ease;
-  cursor: pointer;
-}
 
-.usuario-container:hover .gancho-genero {
-  transform: scale(1.1);
-}.logo-usuario:focus {
-  outline: none;
-}
-.botones-auth {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  padding: 0;
-  list-style: none;
-}
+    .botones-auth {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+      padding: 0;
+      list-style: none;
+    }
 
-.botones-auth li {
-  list-style: none;
-}
+    .botones-auth li {
+      list-style: none;
+    }
 
-.btn-link,
-.btn-primary,
-.btn-outline {
-  font-family: 'Poppins', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 8px 18px;
-  border-radius: 10px;
-  text-decoration: none;
-  display: inline-block;
-  transition: all 0.3s ease;
-  text-align: center;
-  white-space: nowrap;
-}
+    .btn-link,
+    .btn-primary,
+    .btn-outline {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 0.5rem 1.125rem;
+      border-radius: 0.625rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+      text-align: center;
+      white-space: nowrap;
+    }
 
-/* Continuar sin registrarse */
-.btn-link {
-  border: 1px solid black;
-  color: black;
-  background-color: white;
-}
+    .btn-link {
+      border: 0.0625rem solid black;
+      color: black;
+      background-color: white;
+    }
 
-/* Iniciar sesión */
-.btn-primary {
-  background-color: black;
-  color: white;
-  border: none;
-}
+    .btn-primary {
+      background-color: black;
+      color: white;
+      border: none;
+    }
 
-/* Registrarse */
-.btn-outline {
-  border: 1px solid black;
-  color: black;
-  bbtn-primary:hover {
-  background-color: #333;
-}
-ackground-color: white;
-}
+    .btn-outline {
+      border: 0.0625rem solid black;
+      color: black;
+      background-color: white;
+    }
 
-.btn-link:hover,
-.btn-outline:hover {
-  background-color: #f0f0f0;
-}
+    .btn-link:hover,
+    .btn-outline:hover {
+      background-color: #f0f0f0;
+    }
 
-
-
+    .btn-primary:hover {
+      background-color: #333;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">
-      <a href="{% url 'home' %}">
+  <header class="header-container">
+    <div class="left-section">
+      <a href="javascript:history.back();">
+        <img src="{% static 'Authentication/image/logo.jpeg' %}" alt="Logo" class="logo-img">
       </a>
     </div>
 
-    {% if user.is_authenticated %}
-    <nav>
-      <ul>
-        <li class="usuario-container">
-          {% if request.GET.genero == 'hombre' %}
-            <a href="{% url 'armario_hombre' %}">
-              <img src="{% static 'Authentication/image/gancho.png' %}" alt="Gancho" class="gancho-genero">
+    <div class="right-section">
+      {% if user.is_authenticated %}
+      <nav>
+        <ul>
+          <li class="usuario-container">
+            {% if request.GET.genero == 'hombre' %}
+              <a href="{% url 'armario_hombre' %}">
+                <img src="{% static 'Authentication/image/gancho.png' %}" alt="Gancho" class="gancho-genero">
+              </a>
+            {% elif request.GET.genero == 'mujer' %}
+              <a href="{% url 'armario_mujer' %}">
+                <img src="{% static 'Authentication/image/gancho.png' %}" alt="Gancho" class="gancho-genero">
+              </a>
+            {% endif %}
+            <a href="{% url 'inicio' %}">
+              <img src="{% static 'Authentication/image/mini.png' %}" alt="Logo usuario" class="logo-usuario">
             </a>
-          {% elif request.GET.genero == 'mujer' %}
-            <a href="{% url 'armario_mujer' %}">
-              <img src="{% static 'Authentication/image/gancho.png' %}" alt="Gancho" class="gancho-genero">
-            </a>
-          {% endif %}
-          <a href="{% url 'inicio' %}">
-            <img src="{% static 'Authentication/image/mini.png' %}" alt="Logo usuario" class="logo-usuario">
-          </a>
-          <div class="nombre-usuario">
-            <span>Hola, {{ user.first_name|title }}</span>
-            <a href="{% url 'logout' %}" class="cerrar-sesion">Cerrar Sesión</a>
-          </div>
-        </li>
-      </ul>
-    </nav>
-    {% else %}
-    <nav>
-      <ul class="botones-auth">
-        <li><a href="{% url 'signin' %}" class="btn-primary">Iniciar Sesión</a></li>
-        <li><a href="{% url 'signup' %}" class="btn-outline">Registrarse</a></li>
-      </ul>
-    </nav>
-    {% endif %}
+            <div class="nombre-usuario">
+              <span>Hola, {{ user.first_name|title }}</span>
+              <a href="{% url 'logout' %}" class="cerrar-sesion">Cerrar Sesión</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      {% else %}
+      <nav>
+        <ul class="botones-auth">
+          <li><a href="{% url 'signin' %}" class="btn-primary">Iniciar Sesión</a></li>
+          <li><a href="{% url 'signup' %}" class="btn-outline">Registrarse</a></li>
+        </ul>
+      </nav>
+      {% endif %}
+    </div>
   </header>
 
   <main>
