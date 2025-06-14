@@ -1,141 +1,48 @@
 {% extends "components/base.html" %}
 {% load static %}
+
+{% block title %}Reconocimiento - MonitorAula{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'Dashboard/css/dashboard.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+{% endblock %}
+
 {% block content %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitor Aula</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100">
+<main class="dashboard-body">
+  <!-- Tarjetas -->
+  <section class="dashboard-cards">
+    <!-- Ejemplo de tarjeta -->
+    <div class="card card-green">
+      <div class="icon"><i class="fas fa-brain"></i></div>
+      <div>
+        <h2>Atención Promedio</h2>
+        <p>78%</p>
+      </div>
+    </div>
+    <!-- Resto de tarjetas... -->
+  </section>
 
-    <!-- Main Content -->
-    <main class="p-6">
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Card 1: Atención Promedio -->
-            <div class="bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
-                <div class="bg-green-200 p-4 rounded-full">
-                    <svg class="w-8 h-8 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v4m0 0l-3-3m3 3l3-3m9 9c0-4.418-3.582-8-8-8S13 8.418 13 13s3.582 8 8 8 8-3.582 8-8z"></path>
-                    </svg>
-                </div>
-                <div>
-                    <h2 class="text-xl font-bold">Atención Promedio</h2>
-                    <p class="text-lg text-gray-600">78%</p>
-                </div>
-            </div>
+  <!-- Gráficas -->
+  <section class="charts">
+    <div class="chart-box">
+      <h3>Momentos de distracción vs atención</h3>
+      <canvas id="chartDistractionVsAttention"></canvas>
+    </div>
+    <div class="chart-box">
+      <h3>Atención durante la última clase</h3>
+      <canvas id="chartLastClassAttention"></canvas>
+    </div>
+  </section>
 
-            <!-- Card 2: Estudiantes distraídos -->
-            <div class="bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
-                <div class="bg-yellow-200 p-4 rounded-full">
-                    <svg class="w-8 h-8 text-yellow-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12l4.5-4.5-4.5-4.5M3 12l4.5-4.5-4.5-4.5"></path>
-                    </svg>
-                </div>
-                <div>
-                    <h2 class="text-xl font-bold">Estudiantes distraídos</h2>
-                    <p class="text-lg text-gray-600">22%</p>
-                </div>
-            </div>
+  <section class="chart-pie">
+    <h3>Distribución general</h3>
+    <canvas id="chartAttentionDistribution"></canvas>
+  </section>
+</main>
+{% endblock %}
 
-            <!-- Card 3: Sesiones Monitoreadas -->
-            <div class="bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
-                <div class="bg-blue-200 p-4 rounded-full">
-                    <svg class="w-8 h-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9 4 9-4-9-4-9 4z"></path>
-                    </svg>
-                </div>
-                <div>
-                    <h2 class="text-xl font-bold">Sesiones Monitoreadas</h2>
-                    <p class="text-lg text-gray-600">24</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Graphs Section -->
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-            <!-- Attention by course chart -->
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <h3 class="text-xl font-bold mb-4">Atención promedio por curso</h3>
-                <canvas id="atencionPorCurso"></canvas>
-            </div>
-
-            <!-- Daily trend chart -->
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <h3 class="text-xl font-bold mb-4">Tendencia diaria</h3>
-                <canvas id="tendenciaDiaria"></canvas>
-            </div>
-        </section>
-    </main>
-
-    <!-- Chart.js Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const atencionPorCurso = document.getElementById('atencionPorCurso').getContext('2d');
-        const tendenciaDiaria = document.getElementById('tendenciaDiaria').getContext('2d');
-
-        const atencionChart = new Chart(atencionPorCurso, {
-            type: 'bar',
-            data: {
-                labels: ['Matemáticas', 'Física', 'Química', 'Biología', 'Literatura'],
-                datasets: [{
-                    label: 'Nivel de atención (%)',
-                    data: [80, 60, 70, 75, 85],
-                    backgroundColor: 'rgba(34, 197, 94, 0.6)',
-                    borderColor: 'rgba(34, 197, 94, 1)',
-                    borderWidth: 1
-                }]
-            }
-        });
-
-        const tendenciaChart = new Chart(tendenciaDiaria, {
-            type: 'line',
-            data: {
-                labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie'],
-                datasets: [{
-                    label: 'Nivel de atención (%)',
-                    data: [70, 75, 80, 85, 90],
-                    borderColor: 'rgba(59, 130, 246, 1)',
-                    backgroundColor: 'rgba(59, 130, 246, 0.3)',
-                    borderWidth: 2,
-                    fill: true
-                }]
-            }
-        });
-    </script>
-</body>
-</html>
-<style>
-    body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f7fafc;
-}
-
-.card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.card h2 {
-    font-size: 1.25rem;
-    font-weight: bold;
-}
-
-.card p {
-    font-size: 1.125rem;
-    color: #4A5568;
-}
-
-canvas {
-    width: 100%;
-    height: 300px;
-}
-
-</style>
+{% block extra_js %}
+  <script src="{% static 'Dashboard/js/reconocimiento_charts.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,104 @@
+/* General */
+.dashboard-body {
+  background-color: #f9fafb;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+/* Cards */
+.dashboard-cards {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  margin-bottom: 2rem;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.card h2 {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #111827;
+}
+
+.card p {
+  color: #4b5563;
+  font-size: 1rem;
+}
+
+.icon {
+  padding: 0.75rem;
+  border-radius: 9999px;
+  font-size: 1.25rem;
+}
+
+/* Icon backgrounds */
+.card-green .icon {
+  background-color: #bbf7d0;
+  color: #16a34a;
+}
+
+.card-yellow .icon {
+  background-color: #fef9c3;
+  color: #facc15;
+}
+
+.card-blue .icon {
+  background-color: #dbeafe;
+  color: #3b82f6;
+}
+
+/* Charts layout */
+.charts {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-bottom: 2rem;
+}
+
+.chart-box {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.chart-box h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #111827;
+}
+
+/* Pie Chart */
+.chart-pie {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.chart-pie h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #111827;
+}
+
+/* Canvas */
+canvas {
+  width: 100% !important;
+  height: auto !important;
+}
