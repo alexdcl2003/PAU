@@ -5,233 +5,223 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Monitor aula</title>
+  <title>Monitor Aula</title>
   <link rel="stylesheet" href="{% static 'Authentication/css/login.css' %}" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    .header-container {
+    /* Estilos generales */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Barra de navegación */
+    .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.625rem 1.25rem;
+      padding: 1rem 2rem;
+      background-color: #f8f9fa;
     }
 
-    .left-section {
+    /* Logo para el menú desplegable */
+    .menu-logo {
+      cursor: pointer;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
     }
 
-    .right-section {
+    .menu-logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    /* Logo principal y nombre del sistema */
+    .navbar-logo {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      font-size: 1.5rem;
+      margin-right: auto;
     }
 
     .logo-img {
-      height: 3.5rem;
-      cursor: pointer;
-      transition: transform 0.3s ease;
+      height: 40px;
+      margin-right: 10px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
     .logo-img:hover {
       transform: scale(1.05);
+      opacity: 1;
     }
 
-    .usuario-container {
-      display: flex;
-      align-items: center;
-      gap: 0.375rem;
-      position: relative;
-    }
-
-    .logo-usuario {
-      width: 2rem;
-      height: 2rem;
-      border-radius: 50%;
-      transition: transform 0.3s ease;
-      cursor: pointer;
-    }
-
-    .usuario-container:hover .logo-usuario {
-      transform: scale(1.1);
-    }
-
-    .gancho-genero {
-      width: 1.75rem;
-      height: 1.75rem;
-      border-radius: 50%;
-      transition: transform 0.3s ease;
-      cursor: pointer;
-      background: #e0e0e0;
-      padding: 0.125rem;
-    }
-
-    .usuario-container:hover .gancho-genero {
-      transform: scale(1.1);
-    }
-
-    .logo-usuario:focus {
-      outline: none;
-    }
-
-    .nombre-usuario {
-      font-weight: bold;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .cerrar-sesion {
+    /* Menú desplegable (en pantallas pequeñas y grandes) */
+    .navbar-collapse {
       display: none;
-      margin-top: 0.25rem;
-      background: #000;
-      color: #fff;
-      padding: 0.25rem 0.625rem;
-      font-size: 0.875rem;
-      border-radius: 0.375rem;
-      text-decoration: none;
-      transition: background 0.3s ease;
-      width: fit-content;
-    }
-
-    .usuario-container:hover .cerrar-sesion {
-      display: inline-block;
-    }
-
-    nav ul {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-    }
-
-    .btn, .btn-active, .boton-link {
-      text-decoration: none;
-      padding: 0.375rem 0.75rem;
-      border-radius: 0.375rem;
-      font-weight: 500;
-    }
-
-    .btn-active {
-      background: black;
-      color: white;
-    }
-
-    .btn {
-      border: 0.0625rem solid black;
-      color: black;
-    }
-
-    .boton-link {
-      color: #333;
-    }
-
-    .botones-auth {
-      display: flex;
-      gap: 1.25rem;
-      align-items: center;
-      padding: 0;
-      list-style: none;
-    }
-
-    .botones-auth li {
-      list-style: none;
-    }
-
-    .btn-link,
-    .btn-primary,
-    .btn-outline {
-      font-family: 'Poppins', sans-serif;
-      font-size: 0.875rem;
-      font-weight: 500;
-      padding: 0.5rem 1.125rem;
-      border-radius: 0.625rem;
-      text-decoration: none;
-      display: inline-block;
+      flex-direction: column;
+      width: 200px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      padding: 1rem;
+      position: absolute;
+      top: 70px;
+      left: 0;
       transition: all 0.3s ease;
-      text-align: center;
-      white-space: nowrap;
     }
 
-    .btn-link {
-      border: 0.0625rem solid black;
+    .navbar-collapse.open {
+      display: flex;
+    }
+
+    .navbar-collapse a {
+      text-align: left;
+      padding: 12px;
+      width: 100%;
+      text-decoration: none;
       color: black;
-      background-color: white;
+      font-size: 14px;
+      border-radius: 5px;
+    }
+
+    .navbar-collapse a:hover {
+      background-color: #ddd;
     }
 
     .btn-primary {
-      background-color: black;
+      background-color: #333;
       color: white;
-      border: none;
-    }
-
-    .btn-outline {
-      border: 0.0625rem solid black;
-      color: black;
-      background-color: white;
-    }
-
-    .btn-link:hover,
-    .btn-outline:hover {
-      background-color: #f0f0f0;
     }
 
     .btn-primary:hover {
-      background-color: #333;
+      background-color: #555;
+    }
+
+    /* Menú desplegable hamburguesa */
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      z-index: 20;
+    }
+
+    .menu-toggle span {
+      width: 30px;
+      height: 4px;
+      background-color: black;
+      margin: 6px 0;
+      transition: 0.3s;
+    }
+
+    /* Estilos responsivos */
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      .navbar-logo {
+        display: none; /* Ocultar el logo principal en pantallas pequeñas */
+      }
+
+      .navbar-collapse {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100%;
+        box-shadow: none;
+      }
+
+      .menu-logo {
+        margin-left: 10px;
+      }
+    }
+
+    /* Avatar de usuario */
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 10px;
     }
   </style>
 </head>
+
 <body>
-  <header class="header-container">
-    <div class="left-section">
-      <a href="javascript:history.back();">
-        <img src="{% static 'Authentication/image/logo.jpeg' %}" alt="Logo" class="logo-img">
-      </a>
+
+  <!-- Barra superior -->
+  <header class="navbar">
+    <!-- Nuevo logo para el menú desplegable -->
+    <div class="menu-logo" onclick="toggleMenu()">
+      <img src="{% static 'Authentication/image/menu.png' %}" alt="Menu Logo">
+      <!-- Este logo será el que sirva para desplegar el menú -->
     </div>
 
-    <div class="right-section">
+    <!-- Logo principal y nombre del sistema -->
+   <div class="navbar-logo">
+  <a href="{% url 'inicio' %}"> <!-- Añadimos el enlace al dashboard -->
+    <img src="{% static 'Authentication/image/logo.png' %}" alt="Logo" class="logo-img">
+    <span>MonitorAula</span>
+  </a>
+</div>
+    <!-- Avatar de usuario y cerrar sesión (derecha) -->
+    <div class="user-info">
       {% if user.is_authenticated %}
-      <nav>
-        <ul>
-          <li class="usuario-container">
-            {% if request.GET.genero == 'hombre' %}
-              <a href="{% url 'armario_hombre' %}">
-                <img src="{% static 'Authentication/image/gancho.png' %}" alt="Gancho" class="gancho-genero">
-              </a>
-            {% elif request.GET.genero == 'mujer' %}
-              <a href="{% url 'armario_mujer' %}">
-                <img src="{% static 'Authentication/image/gancho.png' %}" alt="Gancho" class="gancho-genero">
-              </a>
-            {% endif %}
-            <a href="{% url 'inicio' %}">
-              <img src="{% static 'Authentication/image/mini.png' %}" alt="Logo usuario" class="logo-usuario">
-            </a>
-            <div class="nombre-usuario">
-              <span>Hola, {{ user.first_name|title }}</span>
-              <a href="{% url 'logout' %}" class="cerrar-sesion">Cerrar Sesión</a>
-            </div>
-          </li>
-        </ul>
-      </nav>
+        <div class="user-avatar" style="display: flex; align-items: center;">
+          {% if user.genero == 'Masculino' %}
+            <img src="{% static 'Authentication/image/avatar_hombre.png' %}" alt="Avatar" class="avatar">
+          {% elif user.genero == 'Femenino' %}
+            <img src="{% static 'Authentication/image/avatar_mujer.png' %}" alt="Avatar" class="avatar">
+          {% else %}
+            <img src="{% static 'Authentication/image/avatar_otros.png' %}" alt="Avatar" class="avatar">
+          {% endif %}
+          <span>Hola, {{ user.first_name }}</span>
+        </div>
+        <a href="{% url 'logout' %}" class="btn-primary">Cerrar sesión</a>
       {% else %}
-      <nav>
-        <ul class="botones-auth">
-          <li><a href="{% url 'signin' %}" class="btn-primary">Iniciar Sesión</a></li>
-          <li><a href="{% url 'signup' %}" class="btn-outline">Registrarse</a></li>
-        </ul>
-      </nav>
+        <a href="{% url 'signin' %}" class="btn-primary">Iniciar sesión</a>
+        <a href="{% url 'signup' %}">Registrarse</a>
+      {% endif %}
+    </div>
+
+    <!-- Icono del menú hamburguesa (para pantallas pequeñas) -->
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Menú desplegable -->
+    <div class="navbar-collapse">
+      {% if user.is_authenticated %}
+        <a href="{% url 'inicio' %}">Dashboard</a>
+        <a href="{% url 'monitor' %}">Monitoreo en tiempo real</a>
+        <a href="{% url 'reportes' %}">Reportes Históricos</a>
+        <a href="{% url 'usuarios' %}">Gestión de Usuarios</a>
+        <a href="{% url 'configuracion' %}">Configuración</a>
+      {% else %}
+        <a href="{% url 'signin' %}" class="btn-primary">Iniciar sesión</a>
+        <a href="{% url 'signup' %}">Registrarse</a>
       {% endif %}
     </div>
   </header>
 
-  <main>
+  <!-- Contenido principal -->
+  <main style="margin-top: 80px;">
     {% block content %}
+    <!-- Aquí va el contenido principal de la página -->
     {% endblock %}
   </main>
+
+  <script>
+    // Función para mostrar/ocultar el menú hamburguesa
+    function toggleMenu() {
+      document.querySelector('.navbar-collapse').classList.toggle('open');
+    }
+  </script>
+
 </body>
 </html>
