@@ -32,17 +32,19 @@ def signup_view(request):
         return render(request, 'core/Authentication/signup.html', {'form': CustomUserCreationForm()})
 
 def signin_view(request):
+    if request.user.is_authenticated:
+        return redirect('inicio')  # Cambia 'inicio' por el nombre de tu dashboard si es diferente
+
     if request.method == 'GET':
-        return render(request, 'core/Authentication/signin.html',{
-        'form': AuthenticationForm()
-    })  
-    else :
-        user = authenticate(request, username=request.POST['username'], password=request.POST
-                     ['password'])
+        return render(request, 'core/Authentication/signin.html', {
+            'form': AuthenticationForm()
+        })  
+    else:
+        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
-            return render(request, 'core/Authentication/signin.html',{
-            'form': AuthenticationForm(),
-             'error': 'Usuario o contraseña incorrectos o no existen.'})
+            return render(request, 'core/Authentication/signin.html', {
+                'form': AuthenticationForm(),
+                'error': 'Usuario o contraseña incorrectos o no existen.'})
             
         else:
             login(request, user)

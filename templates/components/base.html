@@ -35,42 +35,54 @@
     }
 
     .menu-logo img {
-      height: 40px;
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
       margin-right: 10px;
     }
 
     /* Logo principal y nombre del sistema */
     .navbar-logo {
       display: flex;
-      align-items: center;
+      align-items: center;  /* Alinea el logo y el texto en el mismo nivel */
       font-size: 1.5rem;
       margin-right: auto;
     }
 
-    .logo-img {
-      height: 40px;
-      margin-right: 10px;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+    .navbar-logo a {
+      display: flex;
+      align-items: center;
+      gap: 10px; /* Espacio entre logo y texto */
+      text-decoration: none;
     }
 
-    .logo-img:hover {
-      transform: scale(1.05);
-      opacity: 1;
+    .navbar-logo img.logo-img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      margin-right: 8px;
+    }
+
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #000;
     }
 
     /* Menú desplegable (en pantallas pequeñas y grandes) */
     .navbar-collapse {
       display: none;
       flex-direction: column;
-      width: 200px;
+      width: 260px;         /* Aumenta el ancho */
       background-color: #f8f9fa;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      padding: 1rem;
+      border-radius: 12px;  /* Bordes más redondeados */
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+      padding: 1.2rem;
       position: absolute;
       top: 70px;
       left: 0;
       transition: all 0.3s ease;
+      z-index: 1000;
     }
 
     .navbar-collapse.open {
@@ -79,16 +91,18 @@
 
     .navbar-collapse a {
       text-align: left;
-      padding: 12px;
+      padding: 16px 12px;   /* Más espacio vertical */
       width: 100%;
       text-decoration: none;
-      color: black;
-      font-size: 14px;
-      border-radius: 5px;
+      color: #222;
+      font-size: 16px;
+      border-radius: 6px;
+      transition: background 0.2s;
     }
 
     .navbar-collapse a:hover {
-      background-color: #ddd;
+      background-color: #e6e6e6;
+      color: #0d6efd;
     }
 
     .btn-primary {
@@ -141,12 +155,106 @@
 
     /* Avatar de usuario */
     .avatar {
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       object-fit: cover;
       margin-right: 10px;
+      cursor: pointer;
     }
+
+    /* Estilos del menú desplegable del avatar */
+    .user-avatar {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    /* El menú dentro del avatar */
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 70px; /* Antes 50px, ahora más abajo */
+      right: 0;
+      background-color: #f8f9fa;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      width: 260px;           /* Ajusta el ancho según necesites */
+      padding: 10px;
+      z-index: 100;
+      word-break: break-word; /* Permite saltos de línea en palabras largas */
+      overflow-wrap: break-word;
+    }
+
+    .dropdown-menu p, .dropdown-menu a {
+      white-space: normal;    /* Permite saltos de línea en los textos */
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .dropdown-menu.open {
+      display: block;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 8px 12px;
+      color: black;
+      text-decoration: none;
+      font-size: 14px;
+      border-radius: 5px;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #ddd;
+    }
+
+    /* Estilos para el logo de notificaciones */
+    .notification-logo {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .notification-logo img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+
+    /* Menú de notificaciones */
+    .notification-dropdown {
+      display: none;
+      position: absolute;
+      top: 70px;
+      right: 0;
+      background-color: #f8f9fa;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      width: 200px;
+      padding: 10px;
+      z-index: 100;
+    }
+
+    .notification-dropdown.open {
+      display: block;
+    }
+
+    .notification-dropdown a {
+      display: block;
+      padding: 8px 12px;
+      color: black;
+      text-decoration: none;
+      font-size: 14px;
+      border-radius: 5px;
+    }
+
+    .notification-dropdown a:hover {
+      background-color: #ddd;
+    }
+
+  
   </style>
 </head>
 
@@ -154,23 +262,31 @@
 
   <!-- Barra superior -->
   <header class="navbar">
-    <!-- Nuevo logo para el menú desplegable -->
-    <div class="menu-logo" onclick="toggleMenu()">
-      <img src="{% static 'Authentication/image/menu.png' %}" alt="Menu Logo">
-      <!-- Este logo será el que sirva para desplegar el menú -->
+    <!-- Menú hamburguesa y logo solo para usuarios autenticados -->
+    {% if user.is_authenticated %}
+      <div class="menu-logo" onclick="toggleMenu()">
+        <img src="{% static 'Authentication/image/menu.png' %}" alt="Menu Logo">
+      </div>
+    {% endif %}
+
+    <div class="navbar-logo">
+      {% if user.is_authenticated %}
+        <a href="#" onclick="handleLogoClick(event)">
+          <img src="{% static 'Authentication/image/logo.png' %}" alt="Logo" class="logo-img">
+          <span class="logo-text">MonitorAula</span>
+        </a>
+      {% else %}
+        <span style="display: flex; align-items: center; cursor: not-allowed;">
+          <img src="{% static 'Authentication/image/logo.png' %}" alt="Logo" class="logo-img">
+          <span class="logo-text">MonitorAula</span>
+        </span>
+      {% endif %}
     </div>
 
-    <!-- Logo principal y nombre del sistema -->
-   <div class="navbar-logo">
-  <a href="{% url 'inicio' %}"> <!-- Añadimos el enlace al dashboard -->
-    <img src="{% static 'Authentication/image/logo.png' %}" alt="Logo" class="logo-img">
-    <span>MonitorAula</span>
-  </a>
-</div>
-    <!-- Avatar de usuario y cerrar sesión (derecha) -->
-    <div class="user-info">
-      {% if user.is_authenticated %}
-        <div class="user-avatar" style="display: flex; align-items: center;">
+    <!-- Avatar y notificaciones solo para usuarios autenticados -->
+    {% if user.is_authenticated %}
+      <div class="user-info">
+        <div class="user-avatar" style="display: flex; align-items: center;" onclick="toggleDropdown()">
           {% if user.genero == 'Masculino' %}
             <img src="{% static 'Authentication/image/avatar_hombre.png' %}" alt="Avatar" class="avatar">
           {% elif user.genero == 'Femenino' %}
@@ -178,35 +294,40 @@
           {% else %}
             <img src="{% static 'Authentication/image/avatar_otros.png' %}" alt="Avatar" class="avatar">
           {% endif %}
-          <span>Hola, {{ user.first_name }}</span>
         </div>
-        <a href="{% url 'logout' %}" class="btn-primary">Cerrar sesión</a>
-      {% else %}
-        <a href="{% url 'signin' %}" class="btn-primary">Iniciar sesión</a>
-        <a href="{% url 'signup' %}">Registrarse</a>
-      {% endif %}
-    </div>
-
-    <!-- Icono del menú hamburguesa (para pantallas pequeñas) -->
-    <div class="menu-toggle" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-
-    <!-- Menú desplegable -->
-    <div class="navbar-collapse">
-      {% if user.is_authenticated %}
+        <div class="dropdown-menu" id="dropdownMenu">
+          <p><strong>{{ user.first_name }} {{ user.last_name }}</strong></p>
+          <p>{{ user.email }}</p>
+          <a href="{% url 'logout' %}" class="btn-primary">Cerrar sesión</a>
+        </div>
+      </div>
+      <div class="notification-logo" onclick="toggleNotificationMenu()">
+        <img src="{% static 'Authentication/image/campana.png' %}" alt="Notification Icon">
+      </div>
+      <div class="notification-dropdown" id="notificationDropdown">
+        <a href="#">Notificación 1</a>
+        <a href="#">Notificación 2</a>
+        <a href="#">Notificación 3</a>
+      </div>
+      <div class="menu-toggle" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="navbar-collapse">
         <a href="{% url 'inicio' %}">Dashboard</a>
         <a href="{% url 'monitor' %}">Monitoreo en tiempo real</a>
         <a href="{% url 'reportes' %}">Reportes Históricos</a>
         <a href="{% url 'usuarios' %}">Gestión de Usuarios</a>
         <a href="{% url 'configuracion' %}">Configuración</a>
-      {% else %}
+      </div>
+    {% else %}
+      <!-- Solo muestra los botones de login y registro si NO está autenticado -->
+      <div class="user-info">
         <a href="{% url 'signin' %}" class="btn-primary">Iniciar sesión</a>
         <a href="{% url 'signup' %}">Registrarse</a>
-      {% endif %}
-    </div>
+      </div>
+    {% endif %}
   </header>
 
   <!-- Contenido principal -->
@@ -220,6 +341,35 @@
     // Función para mostrar/ocultar el menú hamburguesa
     function toggleMenu() {
       document.querySelector('.navbar-collapse').classList.toggle('open');
+    }
+
+    function toggleDropdown() {
+      const dropdown = document.getElementById('dropdownMenu');
+      const notification = document.getElementById('notificationDropdown');
+      // Cierra el de notificaciones si está abierto
+      if (notification.classList.contains('open')) {
+        notification.classList.remove('open');
+      }
+      dropdown.classList.toggle('open');
+    }
+
+    // Función para mostrar/ocultar el menú de notificaciones
+    function toggleNotificationMenu() {
+      const dropdown = document.getElementById('dropdownMenu');
+      const notification = document.getElementById('notificationDropdown');
+      // Cierra el de avatar si está abierto
+      if (dropdown.classList.contains('open')) {
+        dropdown.classList.remove('open');
+      }
+      notification.classList.toggle('open');
+    }
+
+    function handleLogoClick(event) {
+      // Evita el comportamiento por defecto del enlace
+      event.preventDefault();
+      // Aquí puedes agregar la lógica que desees al hacer clic en el logo
+      // Por ejemplo, redirigir a otra página o mostrar un mensaje
+      alert('¡Bienvenido de nuevo!');
     }
   </script>
 
