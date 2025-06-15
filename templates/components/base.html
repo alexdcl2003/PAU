@@ -11,23 +11,23 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    /* Estilos generales */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
     }
 
-    /* Barra de navegación */
     .navbar {
+      height: 4.375rem;           /* 70px */
+      min-height: 4.375rem;       /* 70px */
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
+      padding: 0 2rem;
       background-color: #f8f9fa;
+      box-sizing: border-box;
     }
 
-    /* Logo para el menú desplegable */
     .menu-logo {
       cursor: pointer;
       display: flex;
@@ -35,16 +35,15 @@
     }
 
     .menu-logo img {
-      width: 50px;
-      height: 50px;
+      width: 2.5rem;              /* 40px */
+      height: 2.5rem;             /* 40px */
       object-fit: cover;
-      margin-right: 10px;
+      margin-right: 0.625rem;     /* 10px */
     }
 
-    /* Logo principal y nombre del sistema */
     .navbar-logo {
       display: flex;
-      align-items: center;  /* Alinea el logo y el texto en el mismo nivel */
+      align-items: center;
       font-size: 1.5rem;
       margin-right: auto;
     }
@@ -52,15 +51,15 @@
     .navbar-logo a {
       display: flex;
       align-items: center;
-      gap: 10px; /* Espacio entre logo y texto */
+      gap: 0.625rem;              /* 10px */
       text-decoration: none;
     }
 
     .navbar-logo img.logo-img {
-      width: 50px;
-      height: 50px;
+      width: 2.8125rem;           /* 45px */
+      height: 2.8125rem;          /* 45px */
       object-fit: cover;
-      margin-right: 8px;
+      margin-right: 0.5rem;       /* 8px */
     }
 
     .logo-text {
@@ -69,17 +68,16 @@
       color: #000;
     }
 
-    /* Menú desplegable (en pantallas pequeñas y grandes) */
     .navbar-collapse {
       display: none;
       flex-direction: column;
-      width: 260px;         /* Aumenta el ancho */
+      width: 16.25rem;            /* 260px */
       background-color: #f8f9fa;
-      border-radius: 12px;  /* Bordes más redondeados */
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+      border-radius: 0.75rem;     /* 12px */
+      box-shadow: 0 0.25rem 1.5rem rgba(0, 0, 0, 0.15); /* 0 4px 24px */
       padding: 1.2rem;
       position: absolute;
-      top: 70px;
+      top: 4.375rem;              /* 70px */
       left: 0;
       transition: all 0.3s ease;
       z-index: 1000;
@@ -91,12 +89,12 @@
 
     .navbar-collapse a {
       text-align: left;
-      padding: 16px 12px;   /* Más espacio vertical */
+      padding: 1rem 0.75rem;      /* 16px 12px */
       width: 100%;
       text-decoration: none;
       color: #222;
-      font-size: 16px;
-      border-radius: 6px;
+      font-size: 1rem;            /* 16px */
+      border-radius: 0.375rem;    /* 6px */
       transition: background 0.2s;
     }
 
@@ -114,7 +112,6 @@
       background-color: #555;
     }
 
-    /* Menú desplegable hamburguesa */
     .menu-toggle {
       display: none;
       cursor: pointer;
@@ -122,21 +119,20 @@
     }
 
     .menu-toggle span {
-      width: 30px;
-      height: 4px;
+      width: 1.875rem;            /* 30px */
+      height: 0.25rem;            /* 4px */
       background-color: black;
-      margin: 6px 0;
+      margin: 0.375rem 0;         /* 6px 0 */
       transition: 0.3s;
     }
 
-    /* Estilos responsivos */
-    @media (max-width: 768px) {
+    @media (max-width: 48rem) {   /* 768px */
       .menu-toggle {
         display: block;
       }
 
       .navbar-logo {
-        display: none; /* Ocultar el logo principal en pantallas pequeñas */
+        display: none;
       }
 
       .navbar-collapse {
@@ -149,45 +145,42 @@
       }
 
       .menu-logo {
-        margin-left: 10px;
+        margin-left: 0.625rem;    /* 10px */
       }
     }
 
-    /* Avatar de usuario */
     .avatar {
-      width: 50px;
-      height: 50px;
+      width: 3.125rem;            /* 50px */
+      height: 3.125rem;           /* 50px */
       border-radius: 50%;
       object-fit: cover;
-      margin-right: 10px;
+      margin-right: 0.625rem;     /* 10px */
       cursor: pointer;
     }
 
-    /* Estilos del menú desplegable del avatar */
     .user-avatar {
       display: flex;
       align-items: center;
       position: relative;
     }
 
-    /* El menú dentro del avatar */
     .dropdown-menu {
       display: none;
       position: absolute;
-      top: 70px; /* Antes 50px, ahora más abajo */
+      top: 4.375rem;              /* 70px */
       right: 0;
       background-color: #f8f9fa;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      border-radius: 8px;
-      width: 260px;           /* Ajusta el ancho según necesites */
-      padding: 10px;
+      box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.2); /* 0 2px 10px */
+      border-radius: 0.5rem;      /* 8px */
+      width: 16.25rem;            /* 260px */
+      padding: 0.625rem;          /* 10px */
       z-index: 100;
-      word-break: break-word; /* Permite saltos de línea en palabras largas */
+      word-break: break-word;
       overflow-wrap: break-word;
     }
 
     .dropdown-menu p, .dropdown-menu a {
-      white-space: normal;    /* Permite saltos de línea en los textos */
+      white-space: normal;
       word-break: break-word;
       overflow-wrap: break-word;
     }
@@ -198,18 +191,17 @@
 
     .dropdown-menu a {
       display: block;
-      padding: 8px 12px;
+      padding: 0.5rem 0.75rem;    /* 8px 12px */
       color: black;
       text-decoration: none;
-      font-size: 14px;
-      border-radius: 5px;
+      font-size: 0.875rem;        /* 14px */
+      border-radius: 0.3125rem;   /* 5px */
     }
 
     .dropdown-menu a:hover {
       background-color: #ddd;
     }
 
-    /* Estilos para el logo de notificaciones */
     .notification-logo {
       cursor: pointer;
       display: flex;
@@ -217,23 +209,22 @@
     }
 
     .notification-logo img {
-      width: 50px;
-      height: 50px;
+      width: 3.125rem;            /* 50px */
+      height: 3.125rem;           /* 50px */
       object-fit: cover;
-      margin-right: 10px;
+      margin-right: 0.625rem;     /* 10px */
     }
 
-    /* Menú de notificaciones */
     .notification-dropdown {
       display: none;
       position: absolute;
-      top: 70px;
+      top: 4.375rem;              /* 70px */
       right: 0;
       background-color: #f8f9fa;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      border-radius: 8px;
-      width: 200px;
-      padding: 10px;
+      box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.2); /* 0 2px 10px */
+      border-radius: 0.5rem;      /* 8px */
+      width: 12.5rem;             /* 200px */
+      padding: 0.625rem;          /* 10px */
       z-index: 100;
     }
 
@@ -243,26 +234,22 @@
 
     .notification-dropdown a {
       display: block;
-      padding: 8px 12px;
+      padding: 0.5rem 0.75rem;    /* 8px 12px */
       color: black;
       text-decoration: none;
-      font-size: 14px;
-      border-radius: 5px;
+      font-size: 0.875rem;        /* 14px */
+      border-radius: 0.3125rem;   /* 5px */
     }
 
     .notification-dropdown a:hover {
       background-color: #ddd;
     }
-
-  
   </style>
 </head>
 
 <body>
-
   <!-- Barra superior -->
   <header class="navbar">
-    <!-- Menú hamburguesa y logo solo para usuarios autenticados -->
     {% if user.is_authenticated %}
       <div class="menu-logo" onclick="toggleMenu()">
         <img src="{% static 'Authentication/image/menu.png' %}" alt="Menu Logo">
@@ -283,7 +270,6 @@
       {% endif %}
     </div>
 
-    <!-- Avatar y notificaciones solo para usuarios autenticados -->
     {% if user.is_authenticated %}
       <div class="user-info">
         <div class="user-avatar" style="display: flex; align-items: center;" onclick="toggleDropdown()">
@@ -322,7 +308,6 @@
         <a href="{% url 'configuracion' %}">Configuración</a>
       </div>
     {% else %}
-      <!-- Solo muestra los botones de login y registro si NO está autenticado -->
       <div class="user-info">
         <a href="{% url 'signin' %}" class="btn-primary">Iniciar sesión</a>
         <a href="{% url 'signup' %}">Registrarse</a>
@@ -330,15 +315,12 @@
     {% endif %}
   </header>
 
-  <!-- Contenido principal -->
-  <main style="margin-top: 80px;">
+  <main style="margin-top: 4.375rem;">
     {% block content %}
-    <!-- Aquí va el contenido principal de la página -->
     {% endblock %}
   </main>
 
   <script>
-    // Función para mostrar/ocultar el menú hamburguesa
     function toggleMenu() {
       document.querySelector('.navbar-collapse').classList.toggle('open');
     }
@@ -346,18 +328,15 @@
     function toggleDropdown() {
       const dropdown = document.getElementById('dropdownMenu');
       const notification = document.getElementById('notificationDropdown');
-      // Cierra el de notificaciones si está abierto
       if (notification.classList.contains('open')) {
         notification.classList.remove('open');
       }
       dropdown.classList.toggle('open');
     }
 
-    // Función para mostrar/ocultar el menú de notificaciones
     function toggleNotificationMenu() {
       const dropdown = document.getElementById('dropdownMenu');
       const notification = document.getElementById('notificationDropdown');
-      // Cierra el de avatar si está abierto
       if (dropdown.classList.contains('open')) {
         dropdown.classList.remove('open');
       }
@@ -365,10 +344,7 @@
     }
 
     function handleLogoClick(event) {
-      // Evita el comportamiento por defecto del enlace
       event.preventDefault();
-      // Aquí puedes agregar la lógica que desees al hacer clic en el logo
-      // Por ejemplo, redirigir a otra página o mostrar un mensaje
       alert('¡Bienvenido de nuevo!');
     }
   </script>
