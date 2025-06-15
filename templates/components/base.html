@@ -5,233 +5,349 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Monitor aula</title>
+  <title>Monitor Aula</title>
   <link rel="stylesheet" href="{% static 'Authentication/css/login.css' %}" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
-    .header-container {
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      height: 4.375rem;           /* 70px */
+      min-height: 4.375rem;       /* 70px */
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.625rem 1.25rem;
+      padding: 0 2rem;
+      background-color: #f8f9fa;
+      box-sizing: border-box;
     }
 
-    .left-section {
+    .menu-logo {
+      cursor: pointer;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
     }
 
-    .right-section {
+    .menu-logo img {
+      width: 2.5rem;              /* 40px */
+      height: 2.5rem;             /* 40px */
+      object-fit: cover;
+      margin-right: 0.625rem;     /* 10px */
+    }
+
+    .navbar-logo {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
+      font-size: 1.5rem;
+      margin-right: auto;
     }
 
-    .logo-img {
-      height: 3.5rem;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-
-    .logo-img:hover {
-      transform: scale(1.05);
-    }
-
-    .usuario-container {
+    .navbar-logo a {
       display: flex;
       align-items: center;
-      gap: 0.375rem;
-      position: relative;
+      gap: 0.625rem;              /* 10px */
+      text-decoration: none;
     }
 
-    .logo-usuario {
-      width: 2rem;
-      height: 2rem;
-      border-radius: 50%;
-      transition: transform 0.3s ease;
-      cursor: pointer;
+    .navbar-logo img.logo-img {
+      width: 2.8125rem;           /* 45px */
+      height: 2.8125rem;          /* 45px */
+      object-fit: cover;
+      margin-right: 0.5rem;       /* 8px */
     }
 
-    .usuario-container:hover .logo-usuario {
-      transform: scale(1.1);
-    }
-
-    .gancho-genero {
-      width: 1.75rem;
-      height: 1.75rem;
-      border-radius: 50%;
-      transition: transform 0.3s ease;
-      cursor: pointer;
-      background: #e0e0e0;
-      padding: 0.125rem;
-    }
-
-    .usuario-container:hover .gancho-genero {
-      transform: scale(1.1);
-    }
-
-    .logo-usuario:focus {
-      outline: none;
-    }
-
-    .nombre-usuario {
+    .logo-text {
+      font-size: 1.8rem;
       font-weight: bold;
-      position: relative;
-      display: flex;
-      flex-direction: column;
+      color: #000;
     }
 
-    .cerrar-sesion {
+    .navbar-collapse {
       display: none;
-      margin-top: 0.25rem;
-      background: #000;
-      color: #fff;
-      padding: 0.25rem 0.625rem;
-      font-size: 0.875rem;
-      border-radius: 0.375rem;
-      text-decoration: none;
-      transition: background 0.3s ease;
-      width: fit-content;
-    }
-
-    .usuario-container:hover .cerrar-sesion {
-      display: inline-block;
-    }
-
-    nav ul {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-    }
-
-    .btn, .btn-active, .boton-link {
-      text-decoration: none;
-      padding: 0.375rem 0.75rem;
-      border-radius: 0.375rem;
-      font-weight: 500;
-    }
-
-    .btn-active {
-      background: black;
-      color: white;
-    }
-
-    .btn {
-      border: 0.0625rem solid black;
-      color: black;
-    }
-
-    .boton-link {
-      color: #333;
-    }
-
-    .botones-auth {
-      display: flex;
-      gap: 1.25rem;
-      align-items: center;
-      padding: 0;
-      list-style: none;
-    }
-
-    .botones-auth li {
-      list-style: none;
-    }
-
-    .btn-link,
-    .btn-primary,
-    .btn-outline {
-      font-family: 'Poppins', sans-serif;
-      font-size: 0.875rem;
-      font-weight: 500;
-      padding: 0.5rem 1.125rem;
-      border-radius: 0.625rem;
-      text-decoration: none;
-      display: inline-block;
+      flex-direction: column;
+      width: 16.25rem;            /* 260px */
+      background-color: #f8f9fa;
+      border-radius: 0.75rem;     /* 12px */
+      box-shadow: 0 0.25rem 1.5rem rgba(0, 0, 0, 0.15); /* 0 4px 24px */
+      padding: 1.2rem;
+      position: absolute;
+      top: 4.375rem;              /* 70px */
+      left: 0;
       transition: all 0.3s ease;
-      text-align: center;
-      white-space: nowrap;
+      z-index: 1000;
     }
 
-    .btn-link {
-      border: 0.0625rem solid black;
-      color: black;
-      background-color: white;
+    .navbar-collapse.open {
+      display: flex;
+    }
+
+    .navbar-collapse a {
+      text-align: left;
+      padding: 1rem 0.75rem;      /* 16px 12px */
+      width: 100%;
+      text-decoration: none;
+      color: #222;
+      font-size: 1rem;            /* 16px */
+      border-radius: 0.375rem;    /* 6px */
+      transition: background 0.2s;
+    }
+
+    .navbar-collapse a:hover {
+      background-color: #e6e6e6;
+      color: #0d6efd;
     }
 
     .btn-primary {
-      background-color: black;
+      background-color: #333;
       color: white;
-      border: none;
-    }
-
-    .btn-outline {
-      border: 0.0625rem solid black;
-      color: black;
-      background-color: white;
-    }
-
-    .btn-link:hover,
-    .btn-outline:hover {
-      background-color: #f0f0f0;
     }
 
     .btn-primary:hover {
-      background-color: #333;
+      background-color: #555;
+    }
+
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      z-index: 20;
+    }
+
+    .menu-toggle span {
+      width: 1.875rem;            /* 30px */
+      height: 0.25rem;            /* 4px */
+      background-color: black;
+      margin: 0.375rem 0;         /* 6px 0 */
+      transition: 0.3s;
+    }
+
+    @media (max-width: 48rem) {   /* 768px */
+      .menu-toggle {
+        display: block;
+      }
+
+      .navbar-logo {
+        display: none;
+      }
+
+      .navbar-collapse {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100%;
+        box-shadow: none;
+      }
+
+      .menu-logo {
+        margin-left: 0.625rem;    /* 10px */
+      }
+    }
+
+    .avatar {
+      width: 3.125rem;            /* 50px */
+      height: 3.125rem;           /* 50px */
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 0.625rem;     /* 10px */
+      cursor: pointer;
+    }
+
+    .user-avatar {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 4.375rem;              /* 70px */
+      right: 0;
+      background-color: #f8f9fa;
+      box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.2); /* 0 2px 10px */
+      border-radius: 0.5rem;      /* 8px */
+      width: 16.25rem;            /* 260px */
+      padding: 0.625rem;          /* 10px */
+      z-index: 100;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .dropdown-menu p, .dropdown-menu a {
+      white-space: normal;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .dropdown-menu.open {
+      display: block;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 0.5rem 0.75rem;    /* 8px 12px */
+      color: black;
+      text-decoration: none;
+      font-size: 0.875rem;        /* 14px */
+      border-radius: 0.3125rem;   /* 5px */
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #ddd;
+    }
+
+    .notification-logo {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .notification-logo img {
+      width: 3.125rem;            /* 50px */
+      height: 3.125rem;           /* 50px */
+      object-fit: cover;
+      margin-right: 0.625rem;     /* 10px */
+    }
+
+    .notification-dropdown {
+      display: none;
+      position: absolute;
+      top: 4.375rem;              /* 70px */
+      right: 0;
+      background-color: #f8f9fa;
+      box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.2); /* 0 2px 10px */
+      border-radius: 0.5rem;      /* 8px */
+      width: 12.5rem;             /* 200px */
+      padding: 0.625rem;          /* 10px */
+      z-index: 100;
+    }
+
+    .notification-dropdown.open {
+      display: block;
+    }
+
+    .notification-dropdown a {
+      display: block;
+      padding: 0.5rem 0.75rem;    /* 8px 12px */
+      color: black;
+      text-decoration: none;
+      font-size: 0.875rem;        /* 14px */
+      border-radius: 0.3125rem;   /* 5px */
+    }
+
+    .notification-dropdown a:hover {
+      background-color: #ddd;
     }
   </style>
 </head>
-<body>
-  <header class="header-container">
-    <div class="left-section">
-      <a href="javascript:history.back();">
-        <img src="{% static 'Authentication/image/logo.jpeg' %}" alt="Logo" class="logo-img">
-      </a>
-    </div>
 
-    <div class="right-section">
+<body>
+  <!-- Barra superior -->
+  <header class="navbar">
+    {% if user.is_authenticated %}
+      <div class="menu-logo" onclick="toggleMenu()">
+        <img src="{% static 'Authentication/image/menu.png' %}" alt="Menu Logo">
+      </div>
+    {% endif %}
+
+    <div class="navbar-logo">
       {% if user.is_authenticated %}
-      <nav>
-        <ul>
-          <li class="usuario-container">
-            {% if request.GET.genero == 'hombre' %}
-              <a href="{% url 'armario_hombre' %}">
-                <img src="{% static 'Authentication/image/gancho.png' %}" alt="Gancho" class="gancho-genero">
-              </a>
-            {% elif request.GET.genero == 'mujer' %}
-              <a href="{% url 'armario_mujer' %}">
-                <img src="{% static 'Authentication/image/gancho.png' %}" alt="Gancho" class="gancho-genero">
-              </a>
-            {% endif %}
-            <a href="{% url 'inicio' %}">
-              <img src="{% static 'Authentication/image/mini.png' %}" alt="Logo usuario" class="logo-usuario">
-            </a>
-            <div class="nombre-usuario">
-              <span>Hola, {{ user.first_name|title }}</span>
-              <a href="{% url 'logout' %}" class="cerrar-sesion">Cerrar Sesión</a>
-            </div>
-          </li>
-        </ul>
-      </nav>
+        <a href="#" onclick="handleLogoClick(event)">
+          <img src="{% static 'Authentication/image/logo.png' %}" alt="Logo" class="logo-img">
+          <span class="logo-text">MonitorAula</span>
+        </a>
       {% else %}
-      <nav>
-        <ul class="botones-auth">
-          <li><a href="{% url 'signin' %}" class="btn-primary">Iniciar Sesión</a></li>
-          <li><a href="{% url 'signup' %}" class="btn-outline">Registrarse</a></li>
-        </ul>
-      </nav>
+        <span style="display: flex; align-items: center; cursor: not-allowed;">
+          <img src="{% static 'Authentication/image/logo.png' %}" alt="Logo" class="logo-img">
+          <span class="logo-text">MonitorAula</span>
+        </span>
       {% endif %}
     </div>
+
+    {% if user.is_authenticated %}
+      <div class="user-info">
+        <div class="user-avatar" style="display: flex; align-items: center;" onclick="toggleDropdown()">
+          {% if user.genero == 'Masculino' %}
+            <img src="{% static 'Authentication/image/avatar_hombre.png' %}" alt="Avatar" class="avatar">
+          {% elif user.genero == 'Femenino' %}
+            <img src="{% static 'Authentication/image/avatar_mujer.png' %}" alt="Avatar" class="avatar">
+          {% else %}
+            <img src="{% static 'Authentication/image/avatar_otros.png' %}" alt="Avatar" class="avatar">
+          {% endif %}
+        </div>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <p><strong>{{ user.first_name }} {{ user.last_name }}</strong></p>
+          <p>{{ user.email }}</p>
+          <a href="{% url 'logout' %}" class="btn-primary">Cerrar sesión</a>
+        </div>
+      </div>
+      <div class="notification-logo" onclick="toggleNotificationMenu()">
+        <img src="{% static 'Authentication/image/campana.png' %}" alt="Notification Icon">
+      </div>
+      <div class="notification-dropdown" id="notificationDropdown">
+        <a href="#">Notificación 1</a>
+        <a href="#">Notificación 2</a>
+        <a href="#">Notificación 3</a>
+      </div>
+      <div class="menu-toggle" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="navbar-collapse">
+        <a href="{% url 'inicio' %}">Dashboard</a>
+        <a href="{% url 'monitor' %}">Monitoreo en tiempo real</a>
+        <a href="{% url 'reportes' %}">Reportes Históricos</a>
+        <a href="{% url 'usuarios' %}">Gestión de Usuarios</a>
+        <a href="{% url 'configuracion' %}">Configuración</a>
+      </div>
+    {% else %}
+      <div class="user-info">
+        <a href="{% url 'signin' %}" class="btn-primary">Iniciar sesión</a>
+        <a href="{% url 'signup' %}">Registrarse</a>
+      </div>
+    {% endif %}
   </header>
 
-  <main>
+  <main style="margin-top: 4.375rem;">
     {% block content %}
     {% endblock %}
   </main>
+
+  <script>
+    function toggleMenu() {
+      document.querySelector('.navbar-collapse').classList.toggle('open');
+    }
+
+    function toggleDropdown() {
+      const dropdown = document.getElementById('dropdownMenu');
+      const notification = document.getElementById('notificationDropdown');
+      if (notification.classList.contains('open')) {
+        notification.classList.remove('open');
+      }
+      dropdown.classList.toggle('open');
+    }
+
+    function toggleNotificationMenu() {
+      const dropdown = document.getElementById('dropdownMenu');
+      const notification = document.getElementById('notificationDropdown');
+      if (dropdown.classList.contains('open')) {
+        dropdown.classList.remove('open');
+      }
+      notification.classList.toggle('open');
+    }
+
+    function handleLogoClick(event) {
+      event.preventDefault();
+      alert('¡Bienvenido de nuevo!');
+    }
+  </script>
+
 </body>
 </html>
