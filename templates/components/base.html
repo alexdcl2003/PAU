@@ -174,14 +174,22 @@
     .dropdown-menu {
       display: none;
       position: absolute;
-      top: 50px;
+      top: 70px; /* Antes 50px, ahora más abajo */
       right: 0;
       background-color: #f8f9fa;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
       border-radius: 8px;
-      width: 200px;
+      width: 260px;           /* Ajusta el ancho según necesites */
       padding: 10px;
       z-index: 100;
+      word-break: break-word; /* Permite saltos de línea en palabras largas */
+      overflow-wrap: break-word;
+    }
+
+    .dropdown-menu p, .dropdown-menu a {
+      white-space: normal;    /* Permite saltos de línea en los textos */
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
 
     .dropdown-menu.open {
@@ -219,7 +227,7 @@
     .notification-dropdown {
       display: none;
       position: absolute;
-      top: 50px;
+      top: 70px;
       right: 0;
       background-color: #f8f9fa;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -246,6 +254,7 @@
       background-color: #ddd;
     }
 
+  
   </style>
 </head>
 
@@ -253,23 +262,30 @@
 
   <!-- Barra superior -->
   <header class="navbar">
-    <!-- Nuevo logo para el menú desplegable -->
-    <div class="menu-logo" onclick="toggleMenu()">
-      <img src="{% static 'Authentication/image/menu.png' %}" alt="Menu Logo">
-      <!-- Este logo será el que sirva para desplegar el menú -->
-    </div>
+    <!-- Menú hamburguesa y logo solo para usuarios autenticados -->
+    {% if user.is_authenticated %}
+      <div class="menu-logo" onclick="toggleMenu()">
+        <img src="{% static 'Authentication/image/menu.png' %}" alt="Menu Logo">
+      </div>
+    {% endif %}
 
-    <!-- Logo principal y nombre del sistema -->
     <div class="navbar-logo">
-      <a href="{% url 'inicio' %}">
-        <img src="{% static 'Authentication/image/logo.png' %}" alt="Logo" class="logo-img">
-        <span class="logo-text">MonitorAula</span>
-      </a>
+      {% if user.is_authenticated %}
+        <a href="#" onclick="handleLogoClick(event)">
+          <img src="{% static 'Authentication/image/logo.png' %}" alt="Logo" class="logo-img">
+          <span class="logo-text">MonitorAula</span>
+        </a>
+      {% else %}
+        <span style="display: flex; align-items: center; cursor: not-allowed;">
+          <img src="{% static 'Authentication/image/logo.png' %}" alt="Logo" class="logo-img">
+          <span class="logo-text">MonitorAula</span>
+        </span>
+      {% endif %}
     </div>
 
-    <!-- Avatar de usuario y notificaciones (derecha) -->
-    <div class="user-info">
-      {% if user.is_authenticated %}
+    <!-- Avatar y notificaciones solo para usuarios autenticados -->
+    {% if user.is_authenticated %}
+      <div class="user-info">
         <div class="user-avatar" style="display: flex; align-items: center;" onclick="toggleDropdown()">
           {% if user.genero == 'Masculino' %}
             <img src="{% static 'Authentication/image/avatar_hombre.png' %}" alt="Avatar" class="avatar">
@@ -279,50 +295,39 @@
             <img src="{% static 'Authentication/image/avatar_otros.png' %}" alt="Avatar" class="avatar">
           {% endif %}
         </div>
-        <!-- Menú desplegable del avatar -->
         <div class="dropdown-menu" id="dropdownMenu">
           <p><strong>{{ user.first_name }} {{ user.last_name }}</strong></p>
           <p>{{ user.email }}</p>
           <a href="{% url 'logout' %}" class="btn-primary">Cerrar sesión</a>
         </div>
-      {% else %}
-        <a href="{% url 'signin' %}" class="btn-primary">Iniciar sesión</a>
-        <a href="{% url 'signup' %}">Registrarse</a>
-      {% endif %}
-    </div>
-
-    <!-- Icono de notificaciones -->
-    <div class="notification-logo" onclick="toggleNotificationMenu()">
-      <img src="{% static 'Authentication/image/campana.png' %}" alt="Notification Icon">
-    </div>
-
-    <!-- Menú desplegable de notificaciones -->
-    <div class="notification-dropdown" id="notificationDropdown">
-      <a href="#">Notificación 1</a>
-      <a href="#">Notificación 2</a>
-      <a href="#">Notificación 3</a>
-    </div>
-
-    <!-- Icono del menú hamburguesa (para pantallas pequeñas) -->
-    <div class="menu-toggle" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-
-    <!-- Menú desplegable -->
-    <div class="navbar-collapse">
-      {% if user.is_authenticated %}
+      </div>
+      <div class="notification-logo" onclick="toggleNotificationMenu()">
+        <img src="{% static 'Authentication/image/campana.png' %}" alt="Notification Icon">
+      </div>
+      <div class="notification-dropdown" id="notificationDropdown">
+        <a href="#">Notificación 1</a>
+        <a href="#">Notificación 2</a>
+        <a href="#">Notificación 3</a>
+      </div>
+      <div class="menu-toggle" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="navbar-collapse">
         <a href="{% url 'inicio' %}">Dashboard</a>
         <a href="{% url 'monitor' %}">Monitoreo en tiempo real</a>
         <a href="{% url 'reportes' %}">Reportes Históricos</a>
         <a href="{% url 'usuarios' %}">Gestión de Usuarios</a>
         <a href="{% url 'configuracion' %}">Configuración</a>
-      {% else %}
+      </div>
+    {% else %}
+      <!-- Solo muestra los botones de login y registro si NO está autenticado -->
+      <div class="user-info">
         <a href="{% url 'signin' %}" class="btn-primary">Iniciar sesión</a>
         <a href="{% url 'signup' %}">Registrarse</a>
-      {% endif %}
-    </div>
+      </div>
+    {% endif %}
   </header>
 
   <!-- Contenido principal -->
@@ -357,6 +362,14 @@
         dropdown.classList.remove('open');
       }
       notification.classList.toggle('open');
+    }
+
+    function handleLogoClick(event) {
+      // Evita el comportamiento por defecto del enlace
+      event.preventDefault();
+      // Aquí puedes agregar la lógica que desees al hacer clic en el logo
+      // Por ejemplo, redirigir a otra página o mostrar un mensaje
+      alert('¡Bienvenido de nuevo!');
     }
   </script>
 
