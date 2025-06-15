@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 pip install django
+=======
+pip install python-dotenv
+>>>>>>> 19820c0d49e0968b4a6f4c91af33e9937c325305
