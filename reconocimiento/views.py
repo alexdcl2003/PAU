@@ -21,4 +21,3 @@ def usuarios(request):
 @login_required
 def configuracion(request):
     return render(request, 'core/reconocimiento/configuracion.html')
-
