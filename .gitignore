@@ -5,8 +5,9 @@ env/
 .venv/
 .idea
 .env
+.ent
 # Otros comunes que podrías querer ignorar:
-_pycache_/
+__pycache__/
 *.pyc
 *.pyo
 *.pyd

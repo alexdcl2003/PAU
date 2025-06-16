@@ -8,7 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Authentication.urls')),
     path('reconocimiento/', include('reconocimiento.urls')),
-
+    path('api/ia/', include('monitor_ia.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

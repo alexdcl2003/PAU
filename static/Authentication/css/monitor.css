@@ -1,0 +1,33 @@
+.video-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.face-box {
+  position: absolute;
+  border: 3px solid;
+  border-radius: 5px;
+}
+
+.face-attentive {
+  border-color: #10b981;
+}
+
+.face-distracted {
+  border-color: #ef4444;
+}
+
+.face-sleepy {
+  border-color: #f59e0b;
+}
+
+.animate-attention-alert {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
